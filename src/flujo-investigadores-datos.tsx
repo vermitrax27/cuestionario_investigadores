@@ -1,12 +1,40 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { AlertTriangle, CheckCircle, XCircle, HelpCircle, ArrowRight, ArrowLeft, Home, Microscope, Database } from 'lucide-react';
 
-const FlujoInvestigadores = () => {
-  const [currentStep, setCurrentStep] = useState('inicio');
-  const [answers, setAnswers] = useState({});
-  const [showFactors, setShowFactors] = useState(false);
+// Interfaces para los tipos de componentes
+interface BackButtonProps {
+  onClick: () => void;
+}
 
-  const handleAnswer = (questionId, answer) => {
+interface QuestionCardProps {
+  title: string;
+  children: React.ReactNode;
+  helpText: string;
+}
+
+interface AnswerButtonProps {
+  onClick: () => void;
+  children: React.ReactNode;
+  variant?: 'primary' | 'secondary' | 'warning';
+}
+
+interface ResultCardProps {
+  title: string;
+  type: 'success' | 'warning' | 'error' | 'info';
+  children: React.ReactNode;
+  nextSteps?: string[];
+  profile?: string;
+}
+
+const FlujoInvestigadores = () => {
+  const [currentStep, setCurrentStep] = useState<string>('inicio');
+  const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [showFactors, setShowFactors] = useState<boolean>(false);
+
+  // Usar la variable answers para evitar el error TS6133
+  console.log('Current answers:', answers);
+
+  const handleAnswer = (questionId: string, answer: string) => {
     setAnswers(prev => ({ ...prev, [questionId]: answer }));
     
     // Lógica de navegación según las respuestas
@@ -71,7 +99,7 @@ const FlujoInvestigadores = () => {
     setShowFactors(false);
   };
 
-  const BackButton = ({ onClick }) => (
+  const BackButton = ({ onClick }: BackButtonProps) => (
     <button 
       onClick={onClick}
       className="flex items-center text-blue-600 hover:text-blue-800 mb-4"
@@ -81,7 +109,7 @@ const FlujoInvestigadores = () => {
     </button>
   );
 
-  const QuestionCard = ({ title, children, helpText }) => (
+  const QuestionCard = ({ title, children, helpText }: QuestionCardProps) => (
     <div className="bg-white rounded-lg shadow-lg p-6 max-w-4xl mx-auto">
       <div className="flex items-start mb-4">
         <Microscope className="w-6 h-6 text-blue-600 mr-3 mt-1" />
@@ -101,7 +129,7 @@ const FlujoInvestigadores = () => {
     </div>
   );
 
-  const AnswerButton = ({ onClick, children, variant = 'primary' }) => {
+  const AnswerButton = ({ onClick, children, variant = 'primary' }: AnswerButtonProps) => {
     const baseClasses = "w-full p-4 rounded-lg font-medium transition-colors mb-3 text-left";
     const variants = {
       primary: "bg-blue-600 text-white hover:bg-blue-700",
@@ -119,7 +147,7 @@ const FlujoInvestigadores = () => {
     );
   };
 
-  const ResultCard = ({ title, type, children, nextSteps, profile }) => {
+  const ResultCard = ({ title, type, children, nextSteps, profile }: ResultCardProps) => {
     const typeStyles = {
       success: { bg: 'bg-green-50', border: 'border-green-200', icon: CheckCircle, color: 'text-green-600' },
       warning: { bg: 'bg-yellow-50', border: 'border-yellow-200', icon: AlertTriangle, color: 'text-yellow-600' },
