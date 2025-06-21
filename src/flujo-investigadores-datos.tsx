@@ -21,7 +21,7 @@ interface AnswerButtonProps {
 interface ResultCardProps {
   title: string;
   type: 'success' | 'warning' | 'error' | 'info';
-  children: React.ReactNode;
+  children?: React.ReactNode; // ← Cambiado a opcional con ?
   nextSteps?: string[];
   profile?: string;
 }
@@ -172,7 +172,9 @@ const FlujoInvestigadores = () => {
               </div>
             )}
             
-            <div className="text-gray-700 mb-4">{children}</div>
+            {children && (
+              <div className="text-gray-700 mb-4">{children}</div>
+            )}
             
             {nextSteps && (
               <div className="mt-6">
@@ -470,8 +472,7 @@ const FlujoInvestigadores = () => {
               "Si el tratamiento se basa en el interés legítimo (Art. 16 quinquies), adoptar medidas de calidad y seguridad adecuadas",
               "Firmar un 'Acuerdo de Transferencia de Datos' o 'Acuerdo de Uso de Datos' con el proveedor"
             ]}
-          >
-          </ResultCard>
+          />
         );
 
       case 'resultado_b':
@@ -486,8 +487,7 @@ const FlujoInvestigadores = () => {
               "El acuerdo debe ser transparente para los titulares de los datos",
               "Ambas partes son solidariamente responsables por los daños, por lo que la coordinación es crucial"
             ]}
-          >
-          </ResultCard>
+          />
         );
 
       case 'resultado_c':
@@ -502,8 +502,7 @@ const FlujoInvestigadores = () => {
               "Debe implementar las medidas de seguridad requeridas y mantener la confidencialidad",
               "No puede usar los datos para fines propios sin autorización expresa"
             ]}
-          >
-          </ResultCard>
+          />
         );
 
       case 'resultado_d':
@@ -518,8 +517,7 @@ const FlujoInvestigadores = () => {
               "Puede anular la licitud de su proyecto desde el inicio - se requiere máxima precaución",
               "Buscar asesoría legal inmediata antes de proceder"
             ]}
-          >
-          </ResultCard>
+          />
         );
 
       case 'resultado_e':
@@ -534,8 +532,7 @@ const FlujoInvestigadores = () => {
               "La falta de claridad puede invalidar la base legal de todo su proyecto de investigación",
               "Documentar todas las relaciones y acuerdos con las partes involucradas"
             ]}
-          >
-          </ResultCard>
+          />
         );
 
       default:
